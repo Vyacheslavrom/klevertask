@@ -16,9 +16,11 @@
 class Books {
 
     private $mysqli;
+    private $obja;
 
     function __construct($mysqli) {
         $this->mysqli = $mysqli;
+        
     }
 
     function addBooks($name, $idauthor) {
@@ -57,7 +59,6 @@ class Books {
                 //print_r($res->fetch_all());
                 //$res->free();
                 $d = $res->fetch_all();
-                
             } else {
                 if ($this->mysqli->errno) {
                     echo "Не удалось получить результат на клиенте: (" . !$this->mysqli->errno . ") " . !$this->mysqli->error;
@@ -68,7 +69,8 @@ class Books {
         return $d;
     }
 
-    function getBooks($ff) {
+    function getBooks($ff, Authors $obja) {
+        $this->obja = $obja;
         if ($ff == '')
             $query = "SELECT ID, Name, author_id FROM books";
         else
@@ -80,7 +82,12 @@ class Books {
         if ($result->num_rows > 0) {
             // output data of each row
             while ($row = $result->fetch_assoc()) {
-                echo "id: " . $row["ID"] . " - Name: " . $row["Name"] . " ( " . "ida: " . $row["author_id"] . ") " . " " . "<br>";
+                $arr1 = $this-> obja->selAuthors($row["author_id"]);
+                foreach ($arr1[0] as $v1) {
+                    $aut = $aut ." ". $v1;
+                }
+                echo "id: " . $row["ID"] . " - Name: " . $row["Name"] . " ( " . " автор: " . $aut . ") " . " " . "<br>";
+                $aut = "";
             }
         } else {
             echo "0 results";

@@ -46,13 +46,13 @@ class Authors {
         }
     }
 
-    function selAuthors($idBookAuth) {
+    function selAuthors($id) {
 
-        $query = "CALL selauthors($idBookAuth)";
+        $query = "CALL selauthors($id)";
         if (!$this->mysqli->multi_query($query)) {
-            //echo "Не удалось вызвать хранимую процедуру: (" . $mysqli->errno . ") " . $mysqli->error;
+            echo "Не удалось вызвать хранимую процедуру: (" . $mysqli->errno . ") " . $mysqli->error;
          
-            return $a = [];
+            return $a = ["проблемка"];
         }
 
         do {

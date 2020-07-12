@@ -164,17 +164,22 @@ if (isset($data['books']) || isset($data['addBooks']) || isset($data['appBooks']
             $books->delBooks($data['id']);
         }
     endif;
-    $books->getBooks($data['nameff']);
+    $books->getBooks($data['nameff'], $authors);
 endif;
 if (isset($_GET['author'])) {
     $rr = $books->selBooks($_GET['author']);
     foreach ($rr as $value) {
         echo "<br />";
         foreach ($value as $k => $v) {
-            if ($k % 2 == 0)
-                echo " Название: " . $v;
-            else
-                echo " ID: " . $v;
+            if ($k % 2 == 0) {
+                echo " Название книги: " . $v;
+            } else {
+                echo " -автор: ";
+                $arr1 = $authors->selAuthors($v);
+                foreach ($arr1[0] as $v1) {
+                    echo $v1 . " ";
+                }
+            }
         }
     }
 }
