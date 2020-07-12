@@ -7,56 +7,85 @@
  */
 
 /**
- * Description of Books
- *
- * @author SL-r
+  CREATE PROCEDURE uppauthors(last CHAR(50), first CHAR(50), midl CHAR(50))
+  BEGIN
+  UPDATE authors set LastName = last,  FirstName = first, MiddleName = midl
+  WHERE `authors`.`ID` = id;
+  END
  */
-
-$mysqli = new mysqli("localhost", "newbook", "test", "newbook");
-if ($mysqli->connect_errno) {
-    echo "Не удалось подключиться к MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
-}
-
 class Books {
+
     private $mysqli;
-    private $name;
-    private $idAuthors;
 
     function __construct($mysqli) {
         $this->mysqli = $mysqli;
     }
 
-    function addBooks($name, $idAuthors) {
+    function addBooks($name, $idauthor) {
 
-        $query = "CALL addauthors('$name', '$idAuthors')";
+        $query = "CALL addbooks('$name', '$idauthor')";
         if (!$this->mysqli->multi_query($query)) {
-            echo "Не удалось вызвать хранимую процедуру: (" . $mysqli->errno . ") " . $mysqli->error;
+            echo "Не удалось вызвать хранимую процедуру: (" . !$this->mysqli->errno . ") " . !$this->mysqli->error;
         }
     }
 
-    function uppBooks($name, $idAuthors) {
+    function uppBooks($name, $authorid, $id) {
 
-        $query = "CALL uppauthors('$name', '$idAuthors')";
+        $query = "CALL uppbooks('$name', '$authorid', $id)";
         if (!$this->mysqli->multi_query($query)) {
-            echo "Не удалось вызвать хранимую процедуру: (" . $mysqli->errno . ") " . $mysqli->error;
+            echo "Не удалось вызвать хранимую процедуру: (" . !$this->mysqli->errno . ") " . !$this->mysqli->error;
         }
     }
 
-    function delBooks($name) {
+    function delBooks($id) {
 
-        $query = "CALL delauthors('$name')";
+        $query = "CALL delbooks($id)";
         if (!$this->mysqli->multi_query($query)) {
-            echo "Не удалось вызвать хранимую процедуру: (" . $mysqli->errno . ") " . $mysqli->error;
+            echo "Не удалось вызвать хранимую процедуру: (" . !$this->mysqli->errno . ") " . !$this->mysqli->error;
         }
     }
 
-    function selBooks($name) {
+    function selBooks($idAuthors) {
 
-        $query = "CALL selauthors($name)";
+        $query = "CALL selbooks($idAuthors)";
         if (!$this->mysqli->multi_query($query)) {
-            echo "Не удалось вызвать хранимую процедуру: (" . $mysqli->errno . ") " . $mysqli->error;
+            echo "Не удалось вызвать хранимую процедуру: (" . !$this->mysqli->errno . ") " . !$this->mysqli->error;
         }
-        return $id;
+
+        do {
+            if ($res = $this->mysqli->store_result()) {
+                //print_r($res->fetch_all());
+                //$res->free();
+                $d = $res->fetch_all();
+                
+            } else {
+                if ($this->mysqli->errno) {
+                    echo "Не удалось получить результат на клиенте: (" . !$this->mysqli->errno . ") " . !$this->mysqli->error;
+                }
+            }
+        } while ($this->mysqli->more_results() && $this->mysqli->next_result());
+
+        return $d;
+    }
+
+    function getBooks($ff) {
+        if ($ff == '')
+            $query = "SELECT ID, Name, author_id FROM books";
+        else
+            $query = "SELECT ID, Name, author_id FROM books where Name = '$ff'";
+        if (!$this->mysqli->query($query)) {
+            echo "Не удалось получить данные: (" . $this->mysqlierrno . ") " . $this->mysqlierror;
+        } else
+            $result = $this->mysqli->query($query);
+        if ($result->num_rows > 0) {
+            // output data of each row
+            while ($row = $result->fetch_assoc()) {
+                echo "id: " . $row["ID"] . " - Name: " . $row["Name"] . " ( " . "ida: " . $row["author_id"] . ") " . " " . "<br>";
+            }
+        } else {
+            echo "0 results";
+        }
+//$this->mysqli->close();
     }
 
 }

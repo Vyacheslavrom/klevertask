@@ -1,16 +1,27 @@
 #text{
-      font-family : "trebuchet ms", Verdana, Tahoma, Arial, Sans-Serif;
-  	  font-size : 15px;
-  	  color : #111;
-  	  border : 2px solid #ccc;
-  	  background-color : #ddd;
-   	  margin-top : 10px;
-            float : center; /*Плавающий блок, сдвигающийся влево*/
-            padding : 10px;
-            opacity: 0.7;
+    font-family : "trebuchet ms", Verdana, Tahoma, Arial, Sans-Serif;
+    font-size : 15px;
+    color : #111;
+    border : 2px solid #ccc;
+    background-color : #ddd;
+    margin-top : 10px;
+    float : center; /*Плавающий блок, сдвигающийся влево*/
+    padding : 10px;
+    opacity: 0.7;
 }
 .img{
 
-  width:40; 
-  height:40
+    width:40; 
+    height:40
 }
+.login_text{/*Форма оегистрации*/
+
+    font-family : "trebuchet ms", Verdana, Tahoma, Arial, Sans-Serif;
+    font-size : 30px;
+    color : #111;
+    border : 2px solid #ccc;
+    background-color : #ddd;
+    margin-top : 10px;
+    float : center; /*Плавающий блок, сдвигающийся влево*/
+    padding : 10px;
+    opacity: 0.8;}
