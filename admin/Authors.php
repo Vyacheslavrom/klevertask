@@ -14,45 +14,54 @@
   END
  */
 class Authors {
+
     private $objb;
     private $mysqli;
 
-    function __construct($mysqli, Books $objb) {
-        $this->mysqli = $mysqli;
-        $this->objb = $objb;
+    function __construct() {
+        $this->mysqli = new mysqli("localhost", "newbook", "test", "newbook");
+        if ($this->mysqli->connect_errno) {
+            echo "Не удалось подключиться к MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
+        }
     }
 
     function addAuthors($last, $first, $midl) {
 
         $query = "CALL addauthors('$last', '$first', '$midl')";
         if (!$this->mysqli->multi_query($query)) {
-            echo "Не удалось вызвать хранимую процедуру: (" . $this->mysqli->errno . ") " . $this->mysqli->error;
+            return "Не удалось вызвать хранимую процедуру: (" . $this->mysqli->errno . ") " . $this->mysqli->error;
         }
+        return "автор добавлен";
     }
 
-    function uppAuthors($last, $first, $midl, $id, $idbooks) {
+    function uppAuthors($last, $first, $midl, $id) {
 
-        $query = "CALL uppauthors('$last', '$first', '$midl', $id, $idbooks)";
+        $query = "CALL uppauthors('$last', '$first', '$midl', $id)";
         if (!$this->mysqli->multi_query($query)) {
-            echo "Не удалось вызвать хранимую процедуру: (" . $this->mysqli->errno . ") " . $this->mysqli->error;
+            return "Не удалось вызвать хранимую процедуру: (" . $this->mysqli->errno . ") " . $this->mysqli->error;
         }
+        return "данные автора обновлены";
     }
 
     function delAuthors($id) {
 
         $query = "CALL delauthors($id)";
         if (!$this->mysqli->multi_query($query)) {
-            echo "Не удалось вызвать хранимую процедуру: (" . $this->mysqli->errno . ") " . $this->mysqli->error;
+            return "Не удалось вызвать хранимую процедуру: (" . $this->mysqli->errno . ") " . $this->mysqli->error;
         }
+        return "автор удален";
     }
 
-    function selAuthors($id) {
+//$flag "id": "fam": "vse": 
+    function getAuthors($id, $flag) {
 
-        $query = "CALL selauthors($id)";
+
+        $query = "CALL getauthors('$id', '$flag')";
+
         if (!$this->mysqli->multi_query($query)) {
-            echo "Не удалось вызвать хранимую процедуру: (" . $mysqli->errno . ") " . $mysqli->error;
-         
-            return $a = ["проблемка"];
+            echo "Не удалось вызвать хранимую процедуру: (" . $this->mysqli->errno . ") " . $this->mysqli->error;
+
+            return $a = ["выбрать автора не удалось"];
         }
 
         do {
@@ -62,7 +71,7 @@ class Authors {
                 $d = $res->fetch_all();
             } else {
                 if ($this->mysqli->errno) {
-                    echo "Не удалось получить результат на клиенте: (" . $mysqli->errno . ") " . $mysqli->error;
+                    echo "Не удалось получить результат на клиенте: (" . $this->mysqli->errno . ") " . $this->mysqli->error;
                 }
             }
         } while ($this->mysqli->more_results() && $this->mysqli->next_result());
@@ -70,7 +79,7 @@ class Authors {
         return $d;
     }
 
-    function getAuthors($ff) {
+    function igetAuthors($ff) {
         if ($ff == '')
             $query = "SELECT LastName, FirstName, MiddleName, ID FROM authors";
         else
@@ -84,11 +93,12 @@ class Authors {
             // output data of each row
             while ($row = $result->fetch_assoc()) {
                 $res = $row["ID"];
-                echo "id: " . $row["ID"] . " - Name: " . $row["LastName"] . " " . $row["FirstName"] . " " . $row["MiddleName"] ." ". 
-                        "<a href = ?author=$res >" . "КОЛ-ВО КНИГ У АВТОРА: "  . count($this->objb -> selBooks($row["ID"])) ."</a>" . "<br>";
+                $bs .= "id: " . $row["ID"] . " - Name: " . $row["LastName"] . " " . $row["FirstName"] . " " . $row["MiddleName"] . " " .
+                        "<a href = ?famil=$res >" . "КОЛ-ВО КНИГ У АВТОРА: " . count($this->objb->selBooks($row["ID"], "ida")) . "</a>" . "<br />";
             }
+            return $bs;
         } else {
-            echo "0 results";
+            return "0 results";
         }
 //$this->mysqli->close();
     }

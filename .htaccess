@@ -1,0 +1,17 @@
+AddDefaultCharset UTF-8
+php_flag display_errors on
+php_value error_reporting -1;
+
+Options +FollowSymLinks
+#IndexIgnore */*
+#RewriteEngine on
+
+# Перенаправление с ДОМЕН на ДОМЕН/api
+#RewriteCond %{REQUEST_URI} ^/$
+#RewriteRule ^(.*)$ /api/$1 [R=301]
+
+#Если URI начинается с api/ то перенаправлять все запросы на index.php
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^api/(.*)$ /ap/index.php

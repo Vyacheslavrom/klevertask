@@ -50,7 +50,7 @@ if (isset($data['authors']) || isset($data['addAuthors']) || isset($data['appAut
         </form>
         <?php
         if (isset($data['do_signup'])) {
-            $authors->addAuthors($data['last'], $data['first'], $data['midl']);
+            echo $authors->addAuthors($data['last'], $data['first'], $data['midl']);
         }
     endif;
     if (isset($data['appAuthors']) || isset($data['upp_signup'])):
@@ -76,7 +76,7 @@ if (isset($data['authors']) || isset($data['addAuthors']) || isset($data['appAut
         </form>
         <?php
         if (isset($data['upp_signup'])) {
-            $authors->uppAuthors($data['last'], $data['first'], $data['midl'], $data['id'], $data['idauthor']);
+            echo $authors->uppAuthors($data['last'], $data['first'], $data['midl'], $data['id'], $data['idauthor']);
         }
     endif;
     if (isset($data['delAuthors']) || isset($data['del_signup'])):
@@ -92,10 +92,23 @@ if (isset($data['authors']) || isset($data['addAuthors']) || isset($data['appAut
         </form>
         <?php
         if (isset($data['del_signup'])) {
-            $authors->delAuthors($data['id']);
+            echo "<br />";
+            echo $authors->delAuthors($data['id']);
+            echo "<br />";
         }
     endif;
-    $authors->getAuthors($data['lastff'], $mysqli);
+    echo "<br />";
+    if ($data['lastff'] == '')
+        $flag = 'vse';
+    $d = $authors->getAuthors($data['lastff'], $flag);
+               foreach ($d as $v1) {
+                foreach ($v1 as $v2) {
+                    $aut = $aut . " " . $v2;
+                }
+                $aut .= "<br />";
+            }
+            echo $aut;
+    echo "<br />";
 endif;
 
 //--------------------------------------------------------------------------
@@ -123,7 +136,7 @@ if (isset($data['books']) || isset($data['addBooks']) || isset($data['appBooks']
         </form>
         <?php
         if (isset($data['do_signupbook'])) {
-            $books->addBooks($data['name'], $data['ida']);
+            echo $books->addBooks($data['name'], $data['ida']);
         }
     endif;
     if (isset($data['appBooks']) || isset($data['upp_signupbook'])):
@@ -145,7 +158,7 @@ if (isset($data['books']) || isset($data['addBooks']) || isset($data['appBooks']
         </form>
         <?php
         if (isset($data['upp_signupbook'])) {
-            $books->uppBooks($data['name'], $data['ida'], $data['id']);
+            echo $books->uppBooks($data['name'], $data['ida'], $data['id']);
         }
     endif;
     if (isset($data['delBooks']) || isset($data['del_signupbook'])):
@@ -161,13 +174,28 @@ if (isset($data['books']) || isset($data['addBooks']) || isset($data['appBooks']
         </form>
         <?php
         if (isset($data['del_signupbook'])) {
-            $books->delBooks($data['id']);
+            echo $books->delBooks($data['id']);
         }
     endif;
-    $books->getBooks($data['nameff'], $authors);
+    echo "<br />";
+    echo "<div id ='a1'>";
+    if ($data['nameff'] == '')
+        $flag = 'vse';
+    $d = $books->getBooks($data['nameff'], $flag);
+    foreach ($d as $v1) {
+        foreach ($v1 as $v2) {
+            $aut = $aut . " " . $v2;
+        }
+        $aut .= "<br />";
+    }
+    echo $aut;
+    echo "</div>";
+    echo "<br />";
 endif;
-if (isset($_GET['author'])) {
-    $rr = $books->selBooks($_GET['author']);
+echo "<br />";
+
+if (isset($_GET['famil'])) {
+    $rr = $books->selBooks($_GET['famil'], "ida");
     foreach ($rr as $value) {
         echo "<br />";
         foreach ($value as $k => $v) {
@@ -175,7 +203,7 @@ if (isset($_GET['author'])) {
                 echo " Название книги: " . $v;
             } else {
                 echo " -автор: ";
-                $arr1 = $authors->selAuthors($v);
+                $arr1 = $authors->selAuthors($v, "ida");
                 foreach ($arr1[0] as $v1) {
                     echo $v1 . " ";
                 }
@@ -183,5 +211,6 @@ if (isset($_GET['author'])) {
         }
     }
 }
+
 Pages::endPage();
 

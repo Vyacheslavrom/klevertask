@@ -1,50 +1,64 @@
+
 <?php
-$mysqli = new mysqli("localhost", "newbook", "test", "newbook");
-if ($mysqli->connect_errno) {
-    echo "Не удалось подключиться к MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
-}
-include "Pages.php";
-Pages::beginPage("Моя библиоьека");
-include "admin/Authors.php";
-include "admin/Books.php";
+include_once 'pages.php';
+Pages::beginPage("Главная");
 ?>
-<h1>Моя библиотека</h1>
-<form  method="POST">
-    <strong>Фамилия автора</strong>
-    <input type="text" name="lastff" value="<?php echo @$data['lastff']; ?>">
-    <button type="submit" name="authors">Авторы</button>
-    <strong>Наименование книги</strong>
-    <input type="text" name="nameff" value="<?php echo @$data['nameff']; ?>">
-    <button type="submit" name="books">Книги</button>
+<input type="text" id="b" placeholder="id книги">
+<button id="submit" name="books" value = "1">Книги</button>
+<br />
 
-</form>
-<?php
-$data = $_POST;
-$books = new Books($mysqli);
-$authors = new Authors($mysqli, $books);
+<script>
+    $(document).ready(function () {
+        $("#submit").click(function () {
+            var fnumb = $("#b").val();
+            $.get("http://biblioteka.loc/api/books/" + fnumb, {}, function (data) {
 
-if (isset($data['authors'])) {
-    $authors->getAuthors($data['lastff'], $mysqli);
-}
-if (isset($data['books'])) {
-    $books->getBooks($data['nameff'], $authors);
-}
-if (isset($_GET['author'])) {
-    $rr = $books->selBooks($_GET['author']);
-    foreach ($rr as $value) {
-        echo "<br />";
-        foreach ($value as $k => $v) {
-            if ($k % 2 == 0) {
-                echo " Название книги: " . $v;
-            } else {
-                echo " -автор: ";
-                $arr1 = $authors->selAuthors($v);
-                foreach ($arr1[0] as $v1) {
-                    echo $v1 . " ";
-                }
-            }
-        }
-    }
-}
+                //data = $(data).find("#a1").html().replace ('&lt;br&gt;', "\r\n");
+                $("#block").html(JSON.parse(data).reduce(function (sum, current) {
+                    return sum + ' ' + current.reduce(function (sum, current) {
+                        return sum + ' ' + current;
+                    }, '<br>');
+                }, ));
 
-Pages::endPage();
+            });
+        });
+    });
+</script>
+<input type="text" id="c" placeholder="id автора">
+<button id="submit1" name="authors" value = "1">Авторы</button>
+<br />
+<script>
+    $(document).ready(function () {
+        $("#submit1").click(function () {
+            var fnumb = $("#c").val();
+            $.get("http://biblioteka.loc/api/authors/" + fnumb, {}, function (data) {
+
+                //data = $(data).find("#a1").html().replace ('&lt;br&gt;', "\r\n");
+                $("#block").html(JSON.parse(data).join('<br />'));
+
+            });
+        });
+    });
+</script>
+<br /> 
+<input type="text" id="name" placeholder="Название книги">        
+<input type="text" id="ida" placeholder="id автора кторый ее написал">
+
+<button id="submit2" name="addbooks" >Добавить книгу</button>
+<br />
+<script>
+    $(document).ready(function () {
+        $("#submit2").click(function () {
+            var fname = $("#name").val();
+            var fida = $("#ida").val();
+            $.post("http://biblioteka.loc/api/books/", {name:fname, ida:fida}, function (data) {
+
+                //data = $(data).find("#a1").html().replace ('&lt;br&gt;', "\r\n");
+                $("#block").html(JSON.parse(data).join('<br />'));
+
+            });
+        });
+    });
+</script>
+<div id="block"></div>
+<? Pages::endPage(); ?>

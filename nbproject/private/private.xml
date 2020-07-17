@@ -3,13 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/OpenServer/domains/biblioteka/Index.php</file>
-            <file>file:/C:/OpenServer/domains/biblioteka/pages.php</file>
-            <file>file:/C:/OpenServer/domains/biblioteka/admin/index.php</file>
-            <file>file:/C:/OpenServer/domains/biblioteka/admin/Authors.php</file>
-            <file>file:/C:/OpenServer/domains/biblioteka/style.css</file>
-            <file>file:/C:/OpenServer/domains/biblioteka/admin/tabl.php</file>
-            <file>file:/C:/OpenServer/domains/biblioteka/admin/Books.php</file>
+            <file>file:/C:/OpenServer/domains/biblioteka.loc/ap/db.php</file>
+            <file>file:/C:/OpenServer/domains/biblioteka.loc/ap/Api.php</file>
+            <file>file:/C:/OpenServer/domains/biblioteka.loc/admin/Books.php</file>
+            <file>file:/C:/OpenServer/domains/biblioteka.loc/ap/AuthorsApi.php</file>
+            <file>file:/C:/OpenServer/domains/biblioteka.loc/ap/index.php</file>
+            <file>file:/C:/OpenServer/domains/biblioteka.loc/admin/Authors.php</file>
+            <file>file:/C:/OpenServer/domains/biblioteka.loc/ap/BooksApi.php</file>
+            <file>file:/C:/OpenServer/domains/biblioteka.loc/index.php</file>
         </group>
     </open-files>
 </project-private>

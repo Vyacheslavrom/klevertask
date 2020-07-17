@@ -17,11 +17,11 @@
 .login_text{/*Форма оегистрации*/
 
     font-family : "trebuchet ms", Verdana, Tahoma, Arial, Sans-Serif;
-    font-size : 30px;
+    font-size : 20px;
     color : #111;
     border : 2px solid #ccc;
     background-color : #ddd;
     margin-top : 10px;
     float : center; /*Плавающий блок, сдвигающийся влево*/
     padding : 10px;
-    opacity: 0.8;}
+   }
