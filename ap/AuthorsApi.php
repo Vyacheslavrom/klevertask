@@ -23,7 +23,7 @@ class AuthorsApi extends Api {
      */
     public function indexAction() {
         //$db = (new Db())->getConnect();
-        $users = $this->obj->getAuthors('', 'vse');
+        $users = $this->obj->getAuthors('', 'vseandbook');
         if ($users) {
             return $this->response($users, 200);
         }
@@ -59,15 +59,18 @@ class AuthorsApi extends Api {
      * @return string
      */
     public function createAction() {
-        $name = $this->requestParams['name'] ?? '';
-        $email = $this->requestParams['email'] ?? '';
-        if ($name && $email) {
-            $db = (new Db())->getConnect();
-            $user = new Users($db, [
-                'name' => $name,
-                'email' => $email
-            ]);
-            if ($user = $user->saveNew()) {
+        $last = $this->requestParams['last'] ?? '';
+        $first = $this->requestParams['first'] ?? '';
+        $midl = $this->requestParams['midl'] ?? '';
+
+        if ($last && $first && $midl) {
+            $user = $this->obj->addAuthors($last, $first, $midl);
+            //$db = (new Db())->getConnect();
+            //$user = new Users($db, [
+            // 'name' => $name,
+            //'email' => $email
+            // ]);
+            if ($user = 'автор добавлен') {
                 return $this->response('Data saved.', 200);
             }
         }
@@ -82,19 +85,19 @@ class AuthorsApi extends Api {
      */
     public function updateAction() {
         $parse_url = parse_url($this->requestUri[0]);
-        $userId = $parse_url['path'] ?? null;
+        $id = $parse_url['path'] ?? null;
 
-        $db = (new Db())->getConnect();
+        //$db = (new Db())->getConnect();
+        //if (!$userId || !Users::getById($db, $userId)) {
+        //return $this->response("User with id=$userId not found", 404);
+        // }
 
-        if (!$userId || !Users::getById($db, $userId)) {
-            return $this->response("User with id=$userId not found", 404);
-        }
-
-        $name = $this->requestParams['name'] ?? '';
-        $email = $this->requestParams['email'] ?? '';
-
-        if ($name && $email) {
-            if ($user = Users::update($db, $userId, $name, $email)) {
+        $last = $this->requestParams['last'] ?? '';
+        $first = $this->requestParams['first'] ?? '';
+        $midl = $this->requestParams['midl'] ?? '';
+        $user = $this->obj->uppAuthors($last, $first, $midl, $id);
+        if ($last && $first && $midl && $id) {
+            if ($user = 'данные автора обновлены') {
                 return $this->response('Data updated.', 200);
             }
         }
@@ -109,14 +112,15 @@ class AuthorsApi extends Api {
      */
     public function deleteAction() {
         $parse_url = parse_url($this->requestUri[0]);
-        $userId = $parse_url['path'] ?? null;
+        $id = $parse_url['path'] ?? null;
 
-        $db = (new Db())->getConnect();
+        //$db = (new Db())->getConnect();
 
-        if (!$userId || !Users::getById($db, $userId)) {
-            return $this->response("User with id=$userId not found", 404);
-        }
-        if (Users::deleteById($db, $userId)) {
+        //if (!$userId || !Users::getById($db, $userId)) {
+           // return $this->response("User with id=$userId not found", 404);
+        //}
+        $user = $this->obj->delAuthors($id);
+        if ($user = 'автор удален') {
             return $this->response('Data deleted.', 200);
         }
         return $this->response("Delete error", 500);

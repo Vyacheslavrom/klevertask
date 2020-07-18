@@ -52,7 +52,7 @@ class Authors {
         return "автор удален";
     }
 
-//$flag "id": "fam": "vse": 
+//$flag "id": "fam": "vse": "vseandbook":
     function getAuthors($id, $flag) {
 
 

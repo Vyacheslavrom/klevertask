@@ -1,13 +1,11 @@
+
 <?php
-include "../pages.php";
-Pages::beginPage("Админская страничка");
+include_once 'pages.php';
+Pages::beginPage("Главная");
 ?>
-<input type="text" id="c" placeholder="id автора">
-<button id="submit1" name="authors" value = "1">Авторы</button>
-<br /><br />
 <input type="text" id="b" placeholder="id книги">
 <button id="submit" name="books" value = "1">Книги</button>
-<br /><br />
+<br />
 
 <script>
     $(document).ready(function () {
@@ -26,7 +24,9 @@ Pages::beginPage("Админская страничка");
         });
     });
 </script>
-
+<input type="text" id="c" placeholder="id автора">
+<button id="submit1" name="authors" value = "1">Авторы</button>
+<br />
 <script>
     $(document).ready(function () {
         $("#submit1").click(function () {
@@ -40,20 +40,5 @@ Pages::beginPage("Админская страничка");
         });
     });
 </script>
-
-<a href="pages/addauthors.html">Добавить автора</a>
-<br />
-<a href="pages/uppauthors.html">Изменить данные автора</a>
-<br />
-<a href="pages/delauthors.html">Удалить автора</a>
-<br /><br />
-<a href="pages/addbook.html">Добавить гнигу</a>
-<br />
-<a href="pages/uppbook.html">Изменить данные книги</a>
-<br />
-<a href="pages/delbook.html">Удалить книгу</a>
-<br /><br />
 <div id="block"></div>
-<?php
-Pages::endPage();
-
+<? Pages::endPage(); ?>

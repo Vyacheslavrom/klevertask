@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type='text/javascript' src = 'https://code.jquery.com/jquery-3.5.1.js'></script>
+    </head>
+    <body>
+        <br />
+        <a href="../">Вернутся назад</a>
+        <br /><br />
+        <input type="text" id="lastname" placeholder="Фамилмя">        
+        <input type="text" id="firstname" placeholder="Имя">
+        <input type="text" id="midlename" placeholder="Отчество">
+
+        <button id="submit2" name="addauthors" >Добавить автора</button>
+        <script>
+            $(document).ready(function () {
+                $("#submit2").click(function () {
+                    var f = $("#firstname").val();
+                    var l = $("#lastname").val();
+                    var m = $("#midlename").val();
+                    $.post("http://biblioteka.loc/api/authors/", {last: l, first: f, midl: m}, function (data) {
+
+                        //data = $(data).find("#a1").html().replace ('&lt;br&gt;', "\r\n");
+                        //$("#block").html(JSON.parse(data).join('<br />'));
+                        $("#block").text(data);
+
+                    });
+                });
+            });
+        </script>
+        <div id="block"></div>
+    </body>
+</html>

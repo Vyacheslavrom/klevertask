@@ -28,7 +28,7 @@ class BooksApi extends Api {
         if ($users) {
             return $this->response($users, 200);
         }
-       
+
         return $this->response('Data not found', 404);
     }
 
@@ -64,11 +64,11 @@ class BooksApi extends Api {
         $ida = $this->requestParams['ida'] ?? '';
         //print_r($_REQUEST);
         if ($name && $ida) {
-           // $db = (new Db())->getConnect();
+            // $db = (new Db())->getConnect();
             $user = $this->obj->addBooks($name, $ida);
             //$user = new Users($db, [
-              //  'name' => $name,
-                //'email' => $email
+            //  'name' => $name,
+            //'email' => $email
             //]);
             if ($user = 'книга добавлена') {
                 //echo 'я утут';
@@ -86,19 +86,18 @@ class BooksApi extends Api {
      */
     public function updateAction() {
         $parse_url = parse_url($this->requestUri[0]);
-        $userId = $parse_url['path'] ?? null;
+        $id = $parse_url['path'] ?? null;
 
-        $db = (new Db())->getConnect();
-
-        if (!$userId || !Users::getById($db, $userId)) {
-            return $this->response("User with id=$userId not found", 404);
-        }
+        //$db = (new Db())->getConnect();
+        //if (!$userId || !Users::getById($db, $userId)) {
+        //return $this->response("User with id=$id not found", 404);
+        //}
 
         $name = $this->requestParams['name'] ?? '';
-        $email = $this->requestParams['email'] ?? '';
-
-        if ($name && $email) {
-            if ($user = Users::update($db, $userId, $name, $email)) {
+        $ida = $this->requestParams['ida'] ?? '';
+        if ($name && $ida && $id) {
+            $user = $this->obj->uppBooks($name, $ida, $id);
+            if ($user = 'данные книги обновлены') {
                 return $this->response('Data updated.', 200);
             }
         }
@@ -113,14 +112,14 @@ class BooksApi extends Api {
      */
     public function deleteAction() {
         $parse_url = parse_url($this->requestUri[0]);
-        $userId = $parse_url['path'] ?? null;
+        $id = $parse_url['path'] ?? null;
 
-        $db = (new Db())->getConnect();
-
-        if (!$userId || !Users::getById($db, $userId)) {
-            return $this->response("User with id=$userId not found", 404);
-        }
-        if (Users::deleteById($db, $userId)) {
+        //$db = (new Db())->getConnect();
+        //if (!$userId || !Users::getById($db, $userId)) {
+        // return $this->response("User with id=$userId not found", 404);
+        // }
+        $user = $this->obj->delBooks($id);
+        if ($user = 'книга удалена') {
             return $this->response('Data deleted.', 200);
         }
         return $this->response("Delete error", 500);
