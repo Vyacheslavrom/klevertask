@@ -48,7 +48,7 @@ html,h1,h2,h3,h4,h5,h6,a{
 }
 .description{
     position: absolute;
-    top: 30%;
+    top: 10%;
     margin: auto;
     padding: 2em;
 
@@ -136,9 +136,9 @@ html,h1,h2,h3,h4,h5,h6,a{
 	height: 12em;
 }
 @media and (max-width: 768 px){
- .team .item img{
+ .team .item img(
  	width: 100%;
- }	
+ )	
 }
 .blog .card-title{
 	color:#F97300;

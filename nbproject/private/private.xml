@@ -4,25 +4,17 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/OpenServer/domains/biblioteka.loc/admin/index.php</file>
-            <file>file:/C:/OpenServer/domains/biblioteka.loc/admin/pages/uppbook.html</file>
-            <file>file:/C:/OpenServer/domains/biblioteka.loc/ap/Api.php</file>
-            <file>file:/C:/OpenServer/domains/biblioteka.loc/ap/index.php</file>
-            <file>file:/C:/OpenServer/domains/biblioteka.loc/ap/BooksApi.php</file>
-            <file>file:/C:/OpenServer/domains/biblioteka.loc/css/main.css</file>
             <file>file:/C:/OpenServer/domains/biblioteka.loc/admin/pages/addauthors.html</file>
-            <file>file:/C:/OpenServer/domains/biblioteka.loc/admin/pages/delbook.html</file>
+            <file>file:/C:/OpenServer/domains/biblioteka.loc/index777.php</file>
             <file>file:/C:/OpenServer/domains/biblioteka.loc/ap/db.php</file>
-            <file>file:/C:/OpenServer/domains/biblioteka.loc/admin/pages/uppauthors.html</file>
+            <file>file:/C:/OpenServer/domains/biblioteka.loc/ap/Api.php</file>
             <file>file:/C:/OpenServer/domains/biblioteka.loc/admin/pages/delauthors.html</file>
-            <file>file:/C:/OpenServer/domains/biblioteka.loc/js/bootstrap.min.js</file>
             <file>file:/C:/OpenServer/domains/biblioteka.loc/admin/Books.php</file>
             <file>file:/C:/OpenServer/domains/biblioteka.loc/ap/AuthorsApi.php</file>
             <file>file:/C:/OpenServer/domains/biblioteka.loc/index.html</file>
-            <file>file:/C:/OpenServer/domains/biblioteka.loc/js/main.js</file>
-            <file>file:/C:/OpenServer/domains/biblioteka.loc/js/jquery.min.js</file>
-            <file>file:/C:/OpenServer/domains/biblioteka.loc/admin/pages/addbook.html</file>
+            <file>file:/C:/OpenServer/domains/biblioteka.loc/ap/index.php</file>
             <file>file:/C:/OpenServer/domains/biblioteka.loc/admin/Authors.php</file>
-            <file>file:/C:/OpenServer/domains/biblioteka.loc/css/bootstrap.min.css</file>
+            <file>file:/C:/OpenServer/domains/biblioteka.loc/ap/BooksApi.php</file>
         </group>
     </open-files>
 </project-private>
